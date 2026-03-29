@@ -124,12 +124,24 @@ Restart the server. The agent automatically discovers it and can use it:
 
 ## Roadmap
 
-| Phase | What | Status |
-|-------|------|--------|
-| **Now** | Messaging, Memory, Timers | Working |
-| **Next** | Expense tracking, Todo lists, Shopping lists | Planned |
-| **Later** | Calendar integration, Smart home, Navigation | Vision |
-| **Dream** | Replace your phone homescreen entirely | North star |
+The goal: **replace your phone homescreen with your voice.**
+
+```
+ YOU OWN THE DATA                    DELEGATE & FORGET
+ (embedded tools)                    (external tools)
+
+ ✏️ Notes              ✅ Done       📨 Message (log)      ✅ Done
+ 🧠 Personal memory    ✅ Done       ⏱ Timer               🚧 WIP
+ 💰 Expense tracking   🔜 Next       📨 Message (real)     🔜 Next
+ ✅ Tasks / To-do      🔜 Next       📅 Calendar           🔜 Next
+ 📋 Shopping list      🔜 Next       🔔 Alarm              🔜 Next
+ 📊 Habit tracking     📋 Planned    🌤 Weather / Info     📋 Planned
+                                     🎵 Music control      📋 Planned
+                                     🏠 Smart home         💭 Vision
+                                     🧭 Navigation         💭 Vision
+```
+
+Tools can be Python modules, CLI binaries, API calls, or just the agent's built-in capabilities — whatever fits the job.
 
 ## Tech Stack
 
