@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  voice:
+    build: ./layer1_voice
+    ports:
+      - "3000:3000"
+    environment:
+      - AGENT_URL=http://agent:3001
+    depends_on:
+      - agent
+    restart: unless-stopped
+
+  agent:
+    build: ./layer2_agent
+    ports:
+      - "3001:3001"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - CHILL_DATA_DIR=/app/data
+      - OPENCODE_BIN=${OPENCODE_BIN:-opencode}
+      - OPENCODE_PORT=4096
+    volumes:
+      - ./data:/app/data
+      - ./layer3_tools:/app/layer3_tools:ro
+    restart: unless-stopped

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#1a1a2e"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Hey Chill"/>
+  <title>Hey Chill</title>
+  <link rel="apple-touch-icon" href="/static/icons/icon-192.png"/>
+  <link rel="stylesheet" type="text/css" href="/static/style.css"/>
+</head>
+<body>
+  <div id="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-title">
+        <span class="logo-dot"></span>
+        <h1>Hey Chill</h1>
+        <span class="wake-dot" id="wake-dot" hidden title="Listening for 'Hey Chill'"></span>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="settings-btn" aria-label="Settings" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chat area -->
+    <main class="chat" id="chat" aria-live="polite" aria-label="Chat history">
+      <div class="chat-empty" id="chat-empty">
+        <p>Say "Hey Chill" or tap the mic to start</p>
+      </div>
+    </main>
+
+    <!-- Live transcript (shown while recording) -->
+    <div class="live-transcript" id="live-transcript" hidden>
+      <p id="live-text">Listening...</p>
+    </div>
+
+    <!-- Input area -->
+    <div class="input-area">
+      <input type="text" id="text-input" placeholder="Type a message..." autocomplete="off" spellcheck="false"/>
+      <button class="send-btn" id="send-btn" aria-label="Send message" title="Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+      <button class="mic-btn" id="mic-btn" aria-label="Start voice input" aria-pressed="false">
+        <svg class="mic-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4z"/>
+          <path d="M19 11a1 1 0 0 1 1 1 8 8 0 0 1-16 0 1 1 0 1 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
+          <line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Not supported notice -->
+    <div class="not-supported" id="not-supported" hidden>
+      <p>Speech recognition is not supported in this browser.</p>
+    </div>
+
+  </div><!-- #app -->
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h2 id="modal-title">Settings</h2>
+        <button class="icon-btn" id="modal-close" aria-label="Close settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="lang-select">Language</label>
+        <select id="lang-select">
+          <option value="">Auto-detect</option>
+          <option value="en-US">English (US)</option>
+          <option value="zh-HK">Cantonese (廣東話)</option>
+        </select>
+        <p class="field-hint">Language used for speech recognition.</p>
+
+        <label class="toggle-label" for="hands-free-toggle">
+          <span>Hands-free mode</span>
+          <span class="toggle-switch">
+            <input type="checkbox" id="hands-free-toggle" role="switch"/>
+            <span class="toggle-track"></span>
+          </span>
+        </label>
+        <p class="field-hint">Always listen for "Hey Chill" to start voice input automatically.</p>
+
+        <label for="agent-url">Agent URL</label>
+        <input type="url" id="agent-url"
+               placeholder="http://localhost:3001"
+               autocomplete="off" spellcheck="false"/>
+        <p class="field-hint">The backend agent endpoint. Leave blank to use the server default.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-send" id="save-settings">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- onnxruntime-web: exposes window.ort for local wake word inference -->
+  <script src="/static/ort.min.js"></script>
+  <!-- openWakeWord engine: exposes window.WakeWordEngine -->
+  <script src="/static/openwakeword-engine.js"></script>
+  <script src="/static/main.js"></script>
+</body>
+</html>
